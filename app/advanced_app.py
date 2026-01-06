@@ -5,15 +5,21 @@ import joblib
 import shap
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
+
+import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 # ===========================
 # Load trained model
 # ===========================
-model = joblib.load("../models/xgb_risk_model.pkl")
+model = joblib.load(BASE_DIR / "models" / "xgb_risk_model.pkl")
+
 
 # ===========================
 # Load dataset for summaries
 # ===========================
-df = pd.read_csv("../data/german_credit_data.csv")
+df = pd.read_csv(BASE_DIR / "data" / "german_credit_data.csv")
 df.drop(columns=["Unnamed: 0"], inplace=True, errors="ignore")
 df["Saving accounts"] = df["Saving accounts"].fillna("unknown")
 df["Checking account"] = df["Checking account"].fillna("unknown")
