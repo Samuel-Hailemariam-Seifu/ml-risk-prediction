@@ -242,7 +242,7 @@ Key drivers of credit risk include:
 
 ## 🔲 Confusion Matrix (Best Model)
 
-![Confusion Matrix](images/models/confusion_matrix.png)
+![Confusion Matrix](./images/models/confusion_matrix.png)
 
 This visualization highlights:
 - Correct classification of good borrowers
