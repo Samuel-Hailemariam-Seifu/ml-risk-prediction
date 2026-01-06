@@ -1,5 +1,4 @@
 
-```markdown
 # 📊 Credit Risk Prediction System
 **End-to-End Machine Learning & Deployment Project**
 
