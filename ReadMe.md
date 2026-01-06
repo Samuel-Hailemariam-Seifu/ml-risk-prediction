@@ -1,92 +1,278 @@
-# Credit Risk Prediction Web App
 
-![Streamlit App](https://img.shields.io/badge/Streamlit-App-green) ![Python Version](https://img.shields.io/badge/Python-3.13-blue) ![XGBoost](https://img.shields.io/badge/XGBoost-1.7-orange)
-
-## Table of Contents
-
-1. [Project Overview](#project-overview)  
-2. [Features](#features)  
-3. [Dataset](#dataset)  
-4. [Architecture & Model Pipeline](#architecture--model-pipeline)  
-5. [Installation](#installation)  
-6. [Usage](#usage)  
-7. [Model Explainability](#model-explainability)  
-8. [Folder Structure](#folder-structure)  
-9. [Technologies Used](#technologies-used)  
-10. [License](#license)  
+```markdown
+# 📊 Credit Risk Prediction System
+**End-to-End Machine Learning & Deployment Project**
 
 ---
 
-## Project Overview
+## 🔍 Project Overview
 
-This project implements a **Customer Credit Risk Prediction** system using **XGBoost** and a **preprocessing pipeline**. Users can input customer details via a **Streamlit web interface** to get:  
+This project implements a **production-ready credit risk prediction system** using machine learning to classify loan applicants as **Good Risk** or **Bad Risk**.
 
-- Predicted credit risk (`Low Risk / High Risk`)  
-- Probability of default  
-- Feature importance explanation  
-- SHAP-based local and global interpretability  
+It demonstrates the **complete applied ML lifecycle**, from raw data to deployment, following **industry best practices** used by AI / ML engineers.
 
-The system is designed to assist **financial institutions** in making informed decisions while maintaining interpretability of machine learning predictions.  
-
----
-
-## Features
-
-### Tab 1 – Predict Risk
-- Input customer details:
-  - Age, Sex, Job, Housing, Savings, Checking Account, Credit Amount, Duration, Purpose  
-- Predict risk: `High Risk (Bad)` or `Low Risk (Good)`  
-- Show probability of risk  
-
-### Tab 2 – Feature Importance
-- Displays **overall feature importance** of the model  
-- Top 10 most impactful features visualized using bar charts  
-
-### Tab 3 – SHAP Explanation
-- **Local explanation**: Waterfall plot showing feature contributions for a specific customer  
-- **Global explanation**: Summary plot showing average feature importance across the dataset  
-- Helps users understand **why the model made a prediction**  
+Key highlights:
+- Real-world financial dataset
+- Strong data preprocessing pipeline
+- Multiple model benchmarking
+- Class imbalance handling (SMOTE)
+- Explainability and visual analytics
+- Deployment with Streamlit
 
 ---
 
-## Dataset
+## 🧠 Business Problem
 
-- Source: German Credit Data CSV  
-- Columns: 20+ features including numerical (`Age`, `Credit amount`, `Duration`, etc.) and categorical (`Sex`, `Housing`, `Purpose`, etc.)  
-- Target variable: `Risk` (`good` = 0, `bad` = 1)  
-- Missing values are handled:
-  - `"Saving accounts"` and `"Checking account"` filled with `"unknown"`  
+Banks and financial institutions must assess whether a loan applicant is likely to **default** or **repay** a loan.
 
-**Data preprocessing includes:**
-- Standard scaling for numerical features  
-- One-hot encoding for categorical features  
+Challenges:
+- **Class imbalance** (fewer bad loans)
+- Mixed numerical & categorical features
+- High cost of false negatives (missing risky borrowers)
 
----
-
-## Architecture & Model Pipeline
-
-### Preprocessing
-- Numerical features → `StandardScaler`  
-- Categorical features → `OneHotEncoder(handle_unknown="ignore")`  
-- Combined using `ColumnTransformer`  
-
-### Model
-- **XGBoost Classifier**
-- Hyperparameter tuning using `RandomizedSearchCV`:
-  - `n_estimators`, `max_depth`, `learning_rate`  
-- Integrated into an **imbalanced pipeline** with `SMOTE` (if needed)  
-- Final model saved using `joblib`  
-
-### Explainability
-- SHAP (`KernelExplainer`) for local and global feature contributions  
-- Matplotlib-based plots for Streamlit compatibility  
+The goal is to **maximize ROC-AUC and recall** for high-risk applicants.
 
 ---
 
-## Installation
+## 📂 Dataset Information
 
-Clone the repository:
+- **Dataset:** German Credit Risk Dataset  
+- **Source:** UCI Machine Learning Repository (via Kaggle)  
+- **Records:** 1,000  
+- **Features:** 9  
+- **Target Variable:** `Risk`
+
+### Target Encoding
+| Value | Meaning |
+|-------|---------|
+| 0     | Good credit risk |
+| 1     | Bad credit risk |
+
+---
+
+## 🗂 Project Structure
+
+```
+
+credit-risk-prediction/
+│
+├── data/
+│   └── german_credit_data.csv
+│
+├── models/
+│   └── credit_risk_model.pkl
+│
+├── results/
+│   └── model_comparison.csv
+│
+├── images/
+│   ├── eda/
+│   │   ├── target_distribution.png
+│   │   ├── Age_distribution.png
+│   │   ├── Job_distribution.png
+│   │   ├── Credit amount_distribution.png
+│   │   ├── Duration_distribution.png
+│   │   ├── Sex_distribution.png
+│   │   ├── Housing_distribution.png
+│   │   ├── Saving accounts_distribution.png
+│   │   ├── Checking account_distribution.png
+│   │   └── Purpose_distribution.png
+│   │
+│   ├── models/
+│   │   ├── roc_auc_comparison.png
+│   │   ├── precision_comparison.png
+│   │   ├── recall_comparison.png
+│   │   ├── f1_comparison.png
+│   │   ├── roc_curves.png
+│   │   └── confusion_matrix.png
+│   │
+│   └── feature_importance.png
+│
+├── src/
+│   ├── train_model.py
+│   └── app.py
+│
+├── requirements.txt
+└── README.md
+
+```
+
+---
+
+## 🔧 Technologies & Tools
+
+- **Python 3**
+- **Pandas / NumPy**
+- **Scikit-learn**
+- **XGBoost**
+- **Imbalanced-learn (SMOTE)**
+- **Matplotlib & Seaborn**
+- **Streamlit**
+- **Joblib**
+
+---
+
+## 🧪 Exploratory Data Analysis (EDA)
+
+EDA was performed to understand feature distributions, class imbalance, and data quality.
+
+### 🎯 Target Distribution (Class Imbalance)
+
+![Target Distribution](images/eda/target_distribution.png)
+
+---
+
+### 📊 Numerical Feature Distributions
+
+#### Age
+![Age](images/eda/Age_distribution.png)
+
+#### Job
+![Job](images/eda/Job_distribution.png)
+
+#### Credit Amount
+![Credit Amount](images/eda/Credit%20amount_distribution.png)
+
+#### Loan Duration
+![Duration](images/eda/Duration_distribution.png)
+
+---
+
+### 🧾 Categorical Feature Distributions
+
+#### Sex
+![Sex](images/eda/Sex_distribution.png)
+
+#### Housing
+![Housing](images/eda/Housing_distribution.png)
+
+#### Saving Accounts
+![Saving Accounts](images/eda/Saving%20accounts_distribution.png)
+
+#### Checking Account
+![Checking Account](images/eda/Checking%20account_distribution.png)
+
+#### Loan Purpose
+![Purpose](images/eda/Purpose_distribution.png)
+
+---
+
+## 🏗 Data Preprocessing & Feature Engineering
+
+- Removed unnecessary identifier columns
+- Filled missing categorical values with `"unknown"`
+- Numerical features scaled using **StandardScaler**
+- Categorical features encoded using **OneHotEncoder**
+- Unified preprocessing via **ColumnTransformer**
+- **SMOTE** applied to handle class imbalance
+- End-to-end pipeline used to avoid data leakage
+
+---
+
+## 🤖 Machine Learning Models
+
+Three models were trained using **identical preprocessing pipelines**:
+
+1. **Logistic Regression** (Baseline)
+2. **Random Forest Classifier**
+3. **XGBoost Classifier**
+
+This ensures **fair model comparison**.
+
+---
+
+## 📈 Evaluation Metrics
+
+Models were evaluated on unseen test data using:
+- **ROC-AUC (Primary Metric)**
+- Precision
+- Recall
+- F1-Score
+
+---
+
+## 📊 Model Comparison
+
+### ROC-AUC Comparison
+![ROC AUC](images/models/roc_auc_comparison.png)
+
+### Precision Comparison
+![Precision](images/models/precision_comparison.png)
+
+### Recall Comparison
+![Recall](images/models/recall_comparison.png)
+
+### F1-Score Comparison
+![F1](images/models/f1_comparison.png)
+
+---
+
+## 📉 ROC Curves (All Models)
+
+![ROC Curves](images/models/roc_curves.png)
+
+---
+
+## 🏆 Best Model Selection
+
+Based on **ROC-AUC and recall**, **XGBoost** achieved the best overall performance and was selected for deployment.
+
+The full pipeline (preprocessing + SMOTE + model) is saved as:
+
+```
+
+models/credit_risk_model.pkl
+
+````
+
+---
+
+## 🔍 Model Explainability
+
+### Feature Importance (XGBoost)
+
+![Feature Importance](images/feature_importance.png)
+
+Key drivers of credit risk include:
+- Credit amount
+- Loan duration
+- Checking account status
+- Saving accounts
+
+---
+
+## 🔲 Confusion Matrix (Best Model)
+
+![Confusion Matrix](images/models/confusion_matrix.png)
+
+This visualization highlights:
+- Correct classification of good borrowers
+- Improved recall for bad borrowers using SMOTE
+
+---
+
+## 🚀 Deployment – Streamlit App
+
+The trained model is deployed using **Streamlit**, enabling real-time credit risk predictions.
+
+### ▶ Run Locally
 
 ```bash
-git clone https://github.com/Samuel-Hailemariam-Seifu/credit-risk-app.git
-cd credit-risk-app
+pip install -r requirements.txt
+streamlit run src/app.py
+````
+
+### App Features
+
+* Interactive user input form
+* Real-time prediction
+* Probability-based risk output
+* Clean, business-friendly interface
+* SHAP explainability
+---
+
+## 👤 Author
+
+**Samuel Hailemariam**
+AI Engineer | Machine Learning Engineer
+
