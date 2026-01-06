@@ -88,5 +88,5 @@ The system is designed to assist **financial institutions** in making informed d
 Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/credit-risk-app.git
+git clone https://github.com/Samuel-Hailemariam-Seifu/credit-risk-app.git
 cd credit-risk-app
