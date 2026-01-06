@@ -140,7 +140,7 @@ EDA was performed to understand feature distributions, class imbalance, and data
 ### 🧾 Categorical Feature Distributions
 
 #### Sex
-![Sex](./images/eda/Sex_distribution.png)
+![Sex](images/eda/Sex_distribution.png)
 
 #### Housing
 ![Housing](images/eda/Housing_distribution.png)
@@ -242,7 +242,7 @@ Key drivers of credit risk include:
 
 ## 🔲 Confusion Matrix (Best Model)
 
-![Confusion Matrix](./images/models/confusion_matrix.png)
+![Confusion Matrix](images/models/confusion_matrix.png)
 
 This visualization highlights:
 - Correct classification of good borrowers
