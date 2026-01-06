@@ -140,7 +140,7 @@ EDA was performed to understand feature distributions, class imbalance, and data
 ### 🧾 Categorical Feature Distributions
 
 #### Sex
-![Sex](images/eda/Sex_distribution.png)
+![Sex](./images/eda/Sex_distribution.png)
 
 #### Housing
 ![Housing](images/eda/Housing_distribution.png)
